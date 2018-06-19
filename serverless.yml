@@ -1,0 +1,44 @@
+# Welcome to serverless. Read the docs
+# https://serverless.com/framework/docs/
+
+# Serverless.yml is the configuration the CLI
+# uses to deploy your code to your provider of choice
+
+# The `service` block is the name of the service
+service: test-project-for-localstack
+
+# The `provider` block defines where your service will be deployed
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+# The `functions` block defines what code to deploy
+functions:
+  helloWorld:
+    handler: handler.helloWorld
+    # The `events` block defines how to trigger the handler.helloWorld code
+    events:
+      - http:
+          path: hello-world
+          method: get
+          cors: true
+
+plugins:
+  - serverless-localstack
+
+custom:
+  localstack:
+    debug: true
+    host: http://localhost
+    stages:
+      - local
+    endpoints:
+      S3: http://localhost:4572
+      DynamoDB: http://localhost:4570
+      CloudFormation: http://localhost:4581
+      Elasticsearch: http://localhost:4571
+      ES: http://localhost:4578
+      SNS: http://localhost:4575
+      SQS: http://localhost:4576
+      Lambda: http://localhost:4574
+      Kinesis: http://localhost:4568
